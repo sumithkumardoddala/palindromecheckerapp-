@@ -1,25 +1,32 @@
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 
-public class Stackpalinronecheckerapp {
+public class QueueStackpalindronecheckerapp {
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
-        System.out.println("Stack-Based palinronecheckerapp");
+        System.out.println("Queue + Stack Based palindronecheckerapp");
         System.out.print("Input: ");
 
         String input = sc.nextLine();
-        Stack<Character> stack = new Stack<>();
 
-        // Push all characters into stack
+        Stack<Character> stack = new Stack<>();
+        Queue<Character> queue = new LinkedList<>();
+
+        // Add characters to both stack and queue
         for (int i = 0; i < input.length(); i++) {
-            stack.push(input.charAt(i));
+            char ch = input.charAt(i);
+            stack.push(ch);
+            queue.add(ch);
         }
 
         boolean isPalindrome = true;
 
-        // Compare popped characters with original string
-        for (int i = 0; i < input.length(); i++) {
-            if (input.charAt(i) != stack.pop()) {
+        // Compare elements
+        while (!stack.isEmpty()) {
+            if (stack.pop() != queue.remove()) {
                 isPalindrome = false;
                 break;
             }
