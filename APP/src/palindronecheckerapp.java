@@ -5,14 +5,11 @@ public class palindronecheckerapp {
         Scanner sc = new Scanner(System.in);
         System.out.print("Input: ");
         String input = sc.nextLine();
-        boolean isPalindrome = true;
-        for(int i = 0; i < input.length() / 2; i++){
-            if(input.charAt(i) != input.charAt(input.length() - 1 - i)){
-                isPalindrome = false;
-                break;
-            }
+        String reversed = "";
+        for(int i = input.length() - 1; i >= 0; i--){
+            reversed += input.charAt(i);
         }
-        if(isPalindrome){
+        if(input.equals(reversed)){
             System.out.println("Palindrome");
         } else {
             System.out.println("Not a Palindrome");
