@@ -1,33 +1,76 @@
 import java.util.Scanner;
-import java.util.Deque;
-import java.util.ArrayDeque;
 
-public class Dequepalindronecheckerapp {
-    public static void main(String[] args) {
+class Node {
+    char data;
+    Node next;
 
-        Scanner sc = new Scanner(System.in);
-        System.out.println("UC7: Deque-Based Optimized palindronecheckerapp");
-        System.out.print("Input: ");
+    Node(char data) {
+        this.data = data;
+        this.next = null;
+    }
+}
 
-        String input = sc.nextLine();
-        Deque<Character> deque = new ArrayDeque<>();
+public class LinkedListpalindroncheckerapp {
 
-        // Add characters to deque
-        for (int i = 0; i < input.length(); i++) {
-            deque.addLast(input.charAt(i));
+    // Function to check palindrome
+    public static boolean isPalindrome(Node head) {
+        if (head == null || head.next == null)
+            return true;
+
+        Node slow = head;
+        Node fast = head;
+
+        // Find middle using fast & slow pointer
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
         }
 
-        boolean isPalindrome = true;
+        // Reverse second half
+        Node prev = null;
+        Node current = slow;
+        while (current != null) {
+            Node nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
+        }
 
-        // Compare front and rear
-        while (deque.size() > 1) {
-            if (deque.removeFirst() != deque.removeLast()) {
-                isPalindrome = false;
-                break;
+        // Compare both halves
+        Node firstHalf = head;
+        Node secondHalf = prev;
+
+        while (secondHalf != null) {
+            if (firstHalf.data != secondHalf.data)
+                return false;
+
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
+        }
+
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Linked List Based palindronecheckerapp");
+        System.out.print("Input: ");
+        String input = sc.nextLine();
+
+        // Create Linked List
+        Node head = null, tail = null;
+        for (int i = 0; i < input.length(); i++) {
+            Node newNode = new Node(input.charAt(i));
+            if (head == null) {
+                head = newNode;
+                tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
             }
         }
 
-        if (isPalindrome)
+        if (isPalindrome(head))
             System.out.println("It is a Palindrome.");
         else
             System.out.println("It is NOT a Palindrome.");
